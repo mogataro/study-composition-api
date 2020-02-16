@@ -1,124 +1,66 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
-          target="_blank"
-          rel="noopener"
-          >typescript</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
+  <div style="position: relative;">
+    <h2>vue-class-component</h2>
+    <p>{{ state.count }}</p>
+    <button @click="increment">increment!</button>
+    <button @click="decrement">decrement!</button>
+    <p :style="{ color: autoCountColor }">autoCount:{{ state.autoCount }}</p>
+    <img
+      :style="{ position: 'absolute', left: imgPosition + 'px', transform: `rotateZ(${imgRotate}deg)` }"
+      src="@/assets/logo.svg"
+      alt=""
+    />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue'
+import Component from 'vue-class-component'
 
-export default Vue.extend({
-  name: "HelloWorld",
-  props: {
-    msg: String
+interface State {
+  count: number
+  autoCount: number
+}
+
+@Component
+export default class extends Vue {
+  /**
+   * data
+   */
+  state: State = {
+    count: 0,
+    autoCount: 0
   }
-});
+  imgPosition = 0
+  /**
+   * getter
+   */
+  get autoCountColor(): string {
+    return this.state.autoCount % 2 === 1 ? 'red' : 'gray'
+  }
+  get imgRotate(): number {
+    return this.imgPosition > 35 ? 180 : 0
+  }
+  /**
+   * methods
+   */
+  increment() {
+    this.state.count++
+  }
+  decrement() {
+    this.state.count--
+  }
+  moveImg() {
+    this.imgPosition = this.imgPosition >= 0 && this.imgPosition <= 70 ? this.imgPosition + 10 : 0
+  }
+  /**
+   * life cycle
+   */
+  created() {
+    setInterval(() => {
+      this.state.autoCount++
+    }, 1000)
+    setInterval(this.moveImg, 1000)
+  }
+}
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
