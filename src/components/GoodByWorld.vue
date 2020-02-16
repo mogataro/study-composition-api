@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive, ref, computed, toRefs } from '@vue/composition-api'
+import { createComponent, reactive, ref, computed } from '@vue/composition-api'
 
 export function useCount() {
-  const state = { count: 0, autoCount: 0 }
+  const state = reactive({ count: 0, autoCount: 0 })
 
   const autoCountColor = computed(() => {
     return state.autoCount % 2 === 1 ? 'red' : 'gray'

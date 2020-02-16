@@ -14,6 +14,11 @@ const router = new VueRouter({
       path: '/',
       name: 'home',
       component: () => import(/* webpackChunkName: "home" */ './views/index.vue')
+    },
+    {
+      path: '/img',
+      name: 'img',
+      component: () => import(/* webpackChunkName: "home" */ './views/img.vue')
     }
   ]
 })

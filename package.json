@@ -11,8 +11,11 @@
     "@vue/composition-api": "^0.3.4",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "tesseract-vue": "^0.1.5",
+    "tesseract.js": "^2.0.2",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.2",
+    "vue-property-decorator": "^8.4.0",
     "vue-router": "^3.1.5"
   },
   "devDependencies": {
